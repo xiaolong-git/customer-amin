@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ProductMapper">
+    
+    <resultMap type="Product" id="ProductResult">
+        <result property="id"    column="id"    />
+        <result property="isDeleted"    column="is_deleted"    />
+        <result property="pic"    column="pic"    />
+        <result property="brandId"    column="brand_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="guidePrice"    column="guide_price"    />
+        <result property="brandCode"    column="brand_code"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="brandName"    column="brand_name"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="sellPrice"    column="sell_price"    />
+        <result property="code"    column="code"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="unit"    column="unit"    />
+        <result property="name"    column="name"    />
+        <result property="remark"    column="remark"    />
+        <result property="type"    column="type"    />
+    </resultMap>
+
+    <sql id="selectProductVo">
+        select id, is_deleted, pic, brand_id, create_by, guide_price, brand_code, create_time, brand_name, update_by, sell_price, code, update_time, unit, name, remark, type from t_product
+    </sql>
+
+    <select id="selectProductList" parameterType="Product" resultMap="ProductResult">
+        select
+            product.id,
+            product.is_deleted,
+            product.pic,
+            product.brand_id,
+            product.create_by,
+            product.guide_price,
+            brand.code as brand_code,
+            brand.name as brand_name,
+            product.create_time,
+            product.update_by,
+            product.sell_price,
+            product.code,
+            product.update_time,
+            product.unit,
+            product.name,
+            product.remark,
+            product.type
+            from t_product product
+        left join t_brand brand on product.brand_id=brand.id
+        <!--<include refid="selectProductVo"/>-->
+        <where>
+            <if test="id != null "> and product.id = #{id}</if>
+            <if test="isDeleted != null  and isDeleted != ''"> and product.is_deleted = #{isDeleted}</if>
+            <if test="pic != null  and pic != ''"> and product.pic = #{pic}</if>
+            <if test="brandId != null "> and product.brand_id = #{brandId}</if>
+            <if test="createBy != null  and createBy != ''"> and product.create_by = #{createBy}</if>
+            <if test="guidePrice != null "> and product.guide_price = #{guidePrice}</if>
+            <if test="brandCode != null  and brandCode != ''"> and brand.code = #{brandCode}</if>
+            <if test="createTime != null "> and product.create_time = #{createTime}</if>
+            <if test="brandName != null  and brandName != ''"> and brand.name = #{brandName}</if>
+            <if test="updateBy != null  and updateBy != ''"> and product.update_by = #{updateBy}</if>
+            <if test="sellPrice != null "> and product.sell_price = #{sellPrice}</if>
+            <if test="code != null  and code != ''"> and product.code = #{code}</if>
+            <if test="updateTime != null "> and product.update_time = #{updateTime}</if>
+            <if test="unit != null  and unit != ''"> and product.unit = #{unit}</if>
+            <if test="name != null  and name != ''"> and product.name = #{name}</if>
+            <if test="remark != null  and remark != ''"> and product.remark = #{remark}</if>
+            <if test="type != null  and type != ''"> and product.type = #{type}</if>
+        </where>
+    </select>
+    
+    <select id="selectProductById" parameterType="Long" resultMap="ProductResult">
+        <include refid="selectProductVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertProduct" parameterType="Product" useGeneratedKeys="true" keyProperty="id">
+        insert into t_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isDeleted != null">is_deleted,</if>
+            <if test="pic != null">pic,</if>
+            <if test="brandId != null">brand_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="guidePrice != null">guide_price,</if>
+            <if test="brandCode != null">brand_code,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="brandName != null">brand_name,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="sellPrice != null">sell_price,</if>
+            <if test="code != null">code,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="unit != null">unit,</if>
+            <if test="name != null">name,</if>
+            <if test="remark != null">remark,</if>
+            <if test="type != null">type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isDeleted != null">#{isDeleted},</if>
+            <if test="pic != null">#{pic},</if>
+            <if test="brandId != null">#{brandId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="guidePrice != null">#{guidePrice},</if>
+            <if test="brandCode != null">#{brandCode},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="brandName != null">#{brandName},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="sellPrice != null">#{sellPrice},</if>
+            <if test="code != null">#{code},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="name != null">#{name},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="type != null">#{type},</if>
+         </trim>
+    </insert>
+
+    <update id="updateProduct" parameterType="Product">
+        update t_product
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+            <if test="pic != null">pic = #{pic},</if>
+            <if test="brandId != null">brand_id = #{brandId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="guidePrice != null">guide_price = #{guidePrice},</if>
+            <if test="brandCode != null">brand_code = #{brandCode},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="brandName != null">brand_name = #{brandName},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="sellPrice != null">sell_price = #{sellPrice},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="type != null">type = #{type},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteProductById" parameterType="Long">
+        delete from t_product where id = #{id}
+    </delete>
+
+    <delete id="deleteProductByIds" parameterType="String">
+        delete from t_product where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

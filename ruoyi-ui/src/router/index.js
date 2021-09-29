@@ -80,6 +80,17 @@ export const constantRoutes = [
       }
     ]
   },
+  /*{
+    path: '/business',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/business/:path(.*)',
+        component: (resolve) => require(['@/views/business/purchaseorder'], resolve),
+      }
+    ]
+  },*/
   {
     path: '/dict',
     component: Layout,

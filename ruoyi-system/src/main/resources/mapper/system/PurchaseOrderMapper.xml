@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.PurchaseOrderMapper">
+
+  <resultMap type="PurchaseOrder" id="PurchaseOrderResult">
+    <result property="id"    column="id"    />
+    <result property="type"    column="type"    />
+    <result property="status"    column="status"    />
+    <result property="statusRemark"    column="status_remark"    />
+    <result property="brandName"    column="brand_name"    />
+    <result property="createBy"    column="create_by"    />
+    <result property="code"    column="code"    />
+    <result property="invoiceType"    column="invoice_type"    />
+    <result property="productId"    column="product_id"    />
+    <result property="createTime"    column="create_time"    />
+    <result property="tonnage"    column="tonnage"    />
+    <result property="pickType"    column="pick_type"    />
+    <result property="updateBy"    column="update_by"    />
+    <result property="unitPrice"    column="unit_price"    />
+    <result property="contractOwnership"    column="contract_ownership"    />
+    <result property="updateTime"    column="update_time"    />
+    <result property="productName"    column="product_name"    />
+    <result property="customerId"    column="customer_id"    />
+    <result property="remark"    column="remark"    />
+    <result property="money"    column="money"    />
+    <result property="payType"    column="pay_type"    />
+    <result property="payRemark"    column="pay_remark"    />
+    <result property="customerName"    column="customer_name"    />
+    <result property="isDeleted"    column="is_deleted"    />
+    <result property="freight"    column="freight"    />
+    <result property="makeInvoice"    column="make_invoice"    />
+    <result property="brandId"    column="brand_id"    />
+  </resultMap>
+
+  <sql id="selectPurchaseOrderVo">
+        select id, type, status, status_remark, brand_name, create_by, code, invoice_type, product_id, create_time, tonnage, pick_type, update_by, unit_price, contract_ownership, update_time, product_name, customer_id, remark, money, pay_type, pay_remark, customer_name, is_deleted, freight, make_invoice, brand_id from t_purchase_order
+    </sql>
+
+  <select id="selectPurchaseOrderList" parameterType="com.ruoyi.common.core.domain.model.PurchaseOrderReqVo" resultMap="PurchaseOrderResult">
+    <include refid="selectPurchaseOrderVo"/>
+    <where>
+      <if test="id != null "> and id = #{id}</if>
+      <if test="type != null  and type != ''"> and type = #{type}</if>
+      <if test="status != null  and status != ''"> and status = #{status}</if>
+      <if test="statusRemark != null  and statusRemark != ''"> and status_remark = #{statusRemark}</if>
+      <if test="statusList != null and statusList.size>0">
+        and status in
+        <foreach collection="statusList" item="status" open="(" separator="," close=")">
+          #{status}
+        </foreach>
+      </if>
+      <if test="brandName != null  and brandName != ''"> and brand_name = #{brandName}</if>
+      <if test="createBy != null  and createBy != ''"> and create_by = #{createBy}</if>
+      <if test="code != null  and code != ''"> and code = #{code}</if>
+      <if test="invoiceType != null  and invoiceType != ''"> and invoice_type = #{invoiceType}</if>
+      <if test="productId != null  and productId != ''"> and product_id = #{productId}</if>
+      <if test="createTime != null "> and create_time = #{createTime}</if>
+      <if test="tonnage != null  and tonnage != ''"> and tonnage = #{tonnage}</if>
+      <if test="pickType != null  and pickType != ''"> and pick_type = #{pickType}</if>
+      <if test="updateBy != null  and updateBy != ''"> and update_by = #{updateBy}</if>
+      <if test="unitPrice != null  and unitPrice != ''"> and unit_price = #{unitPrice}</if>
+      <if test="contractOwnership != null  and contractOwnership != ''"> and contract_ownership = #{contractOwnership}</if>
+      <if test="updateTime != null "> and update_time = #{updateTime}</if>
+      <if test="productName != null  and productName != ''"> and product_name = #{productName}</if>
+      <if test="customerId != null  and customerId != ''"> and customer_id = #{customerId}</if>
+      <if test="remark != null  and remark != ''"> and remark = #{remark}</if>
+      <if test="money != null "> and money = #{money}</if>
+      <if test="payType != null  and payType != ''"> and pay_type = #{payType}</if>
+      <if test="payRemark != null  and payRemark != ''"> and pay_remark = #{payRemark}</if>
+      <if test="customerName != null  and customerName != ''"> and customer_name = #{customerName}</if>
+      <if test="isDeleted != null  and isDeleted != ''"> and is_deleted = #{isDeleted}</if>
+      <if test="freight != null "> and freight = #{freight}</if>
+      <if test="makeInvoice != null  and makeInvoice != ''"> and make_invoice = #{makeInvoice}</if>
+      <if test="brandId != null  and brandId != ''"> and brand_id = #{brandId}</if>
+    </where>
+    order by create_time desc
+  </select>
+
+  <select id="selectPurchaseOrderById" parameterType="Long" resultMap="PurchaseOrderResult">
+    <include refid="selectPurchaseOrderVo"/>
+    where id = #{id}
+  </select>
+
+  <insert id="insertPurchaseOrder" parameterType="PurchaseOrder" useGeneratedKeys="true" keyProperty="id">
+    insert into t_purchase_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="type != null">type,</if>
+      <if test="status != null">status,</if>
+      <if test="statusRemark != null">status_remark,</if>
+      <if test="brandName != null">brand_name,</if>
+      <if test="createBy != null">create_by,</if>
+      <if test="code != null">code,</if>
+      <if test="invoiceType != null">invoice_type,</if>
+      <if test="productId != null">product_id,</if>
+      <if test="createTime != null">create_time,</if>
+      <if test="tonnage != null">tonnage,</if>
+      <if test="pickType != null">pick_type,</if>
+      <if test="updateBy != null">update_by,</if>
+      <if test="unitPrice != null">unit_price,</if>
+      <if test="contractOwnership != null">contract_ownership,</if>
+      <if test="updateTime != null">update_time,</if>
+      <if test="productName != null">product_name,</if>
+      <if test="customerId != null">customer_id,</if>
+      <if test="remark != null">remark,</if>
+      <if test="money != null">money,</if>
+      <if test="payType != null">pay_type,</if>
+      <if test="payRemark != null">pay_remark,</if>
+      <if test="customerName != null">customer_name,</if>
+      <if test="isDeleted != null">is_deleted,</if>
+      <if test="freight != null">freight,</if>
+      <if test="makeInvoice != null">make_invoice,</if>
+      <if test="brandId != null">brand_id,</if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="type != null">#{type},</if>
+      <if test="status != null">#{status},</if>
+      <if test="statusRemark != null">#{statusRemark},</if>
+      <if test="brandName != null">#{brandName},</if>
+      <if test="createBy != null">#{createBy},</if>
+      <if test="code != null">#{code},</if>
+      <if test="invoiceType != null">#{invoiceType},</if>
+      <if test="productId != null">#{productId},</if>
+      <if test="createTime != null">#{createTime},</if>
+      <if test="tonnage != null">#{tonnage},</if>
+      <if test="pickType != null">#{pickType},</if>
+      <if test="updateBy != null">#{updateBy},</if>
+      <if test="unitPrice != null">#{unitPrice},</if>
+      <if test="contractOwnership != null">#{contractOwnership},</if>
+      <if test="updateTime != null">#{updateTime},</if>
+      <if test="productName != null">#{productName},</if>
+      <if test="customerId != null">#{customerId},</if>
+      <if test="remark != null">#{remark},</if>
+      <if test="money != null">#{money},</if>
+      <if test="payType != null">#{payType},</if>
+      <if test="payRemark != null">#{payRemark},</if>
+      <if test="customerName != null">#{customerName},</if>
+      <if test="isDeleted != null">#{isDeleted},</if>
+      <if test="freight != null">#{freight},</if>
+      <if test="makeInvoice != null">#{makeInvoice},</if>
+      <if test="brandId != null">#{brandId},</if>
+    </trim>
+  </insert>
+
+  <update id="updatePurchaseOrder" parameterType="PurchaseOrder">
+    update t_purchase_order
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="type != null">type = #{type},</if>
+      <if test="status != null">status = #{status},</if>
+      <if test="statusRemark != null">status_remark = #{statusRemark},</if>
+      <if test="brandName != null">brand_name = #{brandName},</if>
+      <if test="createBy != null">create_by = #{createBy},</if>
+      <if test="code != null">code = #{code},</if>
+      <if test="invoiceType != null">invoice_type = #{invoiceType},</if>
+      <if test="productId != null">product_id = #{productId},</if>
+      <if test="createTime != null">create_time = #{createTime},</if>
+      <if test="tonnage != null">tonnage = #{tonnage},</if>
+      <if test="pickType != null">pick_type = #{pickType},</if>
+      <if test="updateBy != null">update_by = #{updateBy},</if>
+      <if test="unitPrice != null">unit_price = #{unitPrice},</if>
+      <if test="contractOwnership != null">contract_ownership = #{contractOwnership},</if>
+      <if test="updateTime != null">update_time = #{updateTime},</if>
+      <if test="productName != null">product_name = #{productName},</if>
+      <if test="customerId != null">customer_id = #{customerId},</if>
+      <if test="remark != null">remark = #{remark},</if>
+      <if test="money != null">money = #{money},</if>
+      <if test="payType != null">pay_type = #{payType},</if>
+      <if test="payRemark != null">pay_remark = #{payRemark},</if>
+      <if test="customerName != null">customer_name = #{customerName},</if>
+      <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+      <if test="freight != null">freight = #{freight},</if>
+      <if test="makeInvoice != null">make_invoice = #{makeInvoice},</if>
+      <if test="brandId != null">brand_id = #{brandId},</if>
+    </trim>
+    where id = #{id}
+  </update>
+
+  <delete id="deletePurchaseOrderById" parameterType="Long">
+        delete from t_purchase_order where id = #{id}
+    </delete>
+
+  <delete id="deletePurchaseOrderByIds" parameterType="String">
+    delete from t_purchase_order where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

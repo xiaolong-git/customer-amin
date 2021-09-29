@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BrandMapper">
+    
+    <resultMap type="Brand" id="BrandResult">
+        <result property="id"    column="id"    />
+        <result property="isDeleted"    column="is_deleted"    />
+        <result property="code"    column="code"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="name"    column="name"    />
+        <result property="phone"    column="phone"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="type"    column="type"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="pic"    column="pic"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectBrandVo">
+        select id, is_deleted, code, create_by, name, phone, create_time, type, update_by, pic, update_time, remark from t_brand
+    </sql>
+
+    <select id="selectBrandList" parameterType="Brand" resultMap="BrandResult">
+        <include refid="selectBrandVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="isDeleted != null  and isDeleted != ''"> and is_deleted = #{isDeleted}</if>
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="createBy != null  and createBy != ''"> and create_by = #{createBy}</if>
+            <if test="name != null  and name != ''"> and name = #{name}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="updateBy != null  and updateBy != ''"> and update_by = #{updateBy}</if>
+            <if test="pic != null  and pic != ''"> and pic = #{pic}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="remark != null  and remark != ''"> and remark = #{remark}</if>
+        </where>
+    </select>
+    
+    <select id="selectBrandById" parameterType="Long" resultMap="BrandResult">
+        <include refid="selectBrandVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBrand" parameterType="Brand" useGeneratedKeys="true" keyProperty="id">
+        insert into t_brand
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isDeleted != null">is_deleted,</if>
+            <if test="code != null">code,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="name != null">name,</if>
+            <if test="phone != null">phone,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="type != null">type,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="pic != null">pic,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isDeleted != null">#{isDeleted},</if>
+            <if test="code != null">#{code},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="name != null">#{name},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="type != null">#{type},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="pic != null">#{pic},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBrand" parameterType="Brand">
+        update t_brand
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="pic != null">pic = #{pic},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBrandById" parameterType="Long">
+        delete from t_brand where id = #{id}
+    </delete>
+
+    <delete id="deleteBrandByIds" parameterType="String">
+        delete from t_brand where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

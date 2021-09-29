@@ -683,3 +683,174 @@ create table gen_table_column (
   update_time       datetime                                   comment '更新时间',
   primary key (column_id)
 ) engine=innodb auto_increment=1 comment = '代码生成业务表字段';
+
+-- ----------------------------
+-- 20、采购订单表
+-- ----------------------------
+drop table if exists t_purchase_order;
+CREATE TABLE t_purchase_order (
+	id BIGINT (20) NOT NULL auto_increment COMMENT 'id',
+	code VARCHAR (64) COMMENT '订单编号',
+	tonnage VARCHAR (100) COMMENT '吨位',
+	unit_price VARCHAR (100) COMMENT '单价',
+	customer_id VARCHAR (64) COMMENT '客户id',
+	customer_name VARCHAR (64) COMMENT '客户名称',
+	brand_id VARCHAR (100) COMMENT '品牌id',
+	brand_name VARCHAR (100) COMMENT '品牌名称',
+	product_id VARCHAR (100) COMMENT '产品id',
+	product_name VARCHAR (100) COMMENT '产品名称',
+	pay_type VARCHAR (20) COMMENT '付款方式 : 先款:PAY_FIRST  票到:TICKET_ARRIVE 货到:GOODS_ARRIVE',
+	pay_remark VARCHAR (50) COMMENT '付款备注',
+	make_invoice CHAR (1) COMMENT '是否开票 0：否 1：是',
+	status CHAR (1) DEFAULT '0' COMMENT '订单状态 0：已保存: 1：审批中 2：审批通过 3：审批拒绝 4：协同审批',
+	status_remark VARCHAR (50) COMMENT '状态备注',
+	type char(1) DEFAULT '0' COMMENT '订单类型:0：默认普通订单',
+	invoice_type VARCHAR (20) COMMENT '开票类型 专票:INVOICE_SPECIAL 普票:INVOICE_COMMON',
+	pick_type CHAR (1) COMMENT '提货方式 1:直发 2：自提',
+	contract_ownership CHAR (1) COMMENT '合同方 1:买方 2：卖方',
+	money decimal (20,2) COMMENT '金额',
+	freight decimal (20,2) COMMENT '运费',
+	remark VARCHAR (500) COMMENT '备注',
+	is_deleted CHAR (1) DEFAULT '0' COMMENT '逻辑删除 0：正常 1：删除',
+	create_by VARCHAR (64) DEFAULT '' COMMENT '创建者',
+	create_time datetime COMMENT '创建时间',
+	update_by VARCHAR (64) DEFAULT '' COMMENT '更新者',
+	update_time datetime COMMENT '更新时间',
+	PRIMARY KEY (id)
+) ENGINE = INNODB auto_increment = 1 COMMENT = '采购订单表';
+
+-- ----------------------------
+-- 21、采购订单商品关联表
+-- ----------------------------
+drop table if exists t_purchase_order_product_relation;
+CREATE TABLE t_purchase_order_product_relation (
+	id BIGINT (20) NOT NULL auto_increment COMMENT 'id',
+	order_id BIGINT (20) NOT NULL COMMENT '订单id',
+	order_code VARCHAR (64) DEFAULT NULL COMMENT '订单编号',
+	brand_id bigint(20) DEFAULT NULL COMMENT '品牌id',
+	product_id BIGINT (20) COMMENT '商品id',
+	product_code VARCHAR (64)  COMMENT '商品编号',
+	tonnage VARCHAR (100) COMMENT '吨位',
+    quantity decimal (20,2) COMMENT '数量',
+    unit VARCHAR (64) COMMENT '单位',
+	unit_price decimal (20,2) COMMENT '单价',
+	freight decimal (20,2) COMMENT '运费',
+	remark VARCHAR (500) COMMENT '备注',
+	is_deleted CHAR (1) DEFAULT '0' COMMENT '逻辑删除 0：正常 1：删除',
+	create_by VARCHAR (64) DEFAULT '' COMMENT '创建者',
+	create_time datetime COMMENT '创建时间',
+	update_by VARCHAR (64) DEFAULT '' COMMENT '更新者',
+	update_time datetime COMMENT '更新时间',
+	PRIMARY KEY (id)
+) ENGINE = INNODB auto_increment = 1 COMMENT = '采购订单商品关联表';
+
+-- ----------------------------
+-- 22、采购订单合同关联表
+-- ----------------------------
+drop table if exists t_purchase_order_contract_relation;
+CREATE TABLE t_purchase_order_contract_relation (
+	id BIGINT (20) NOT NULL auto_increment COMMENT 'id',
+	order_id BIGINT (20) NOT NULL COMMENT '订单id',
+	order_code VARCHAR (64) DEFAULT NULL COMMENT '订单编号',
+	serial_number int (11) DEFAULT 0 COMMENT '序号',
+	type char(1) DEFAULT '0' COMMENT '合同类型：0：默认普通合同',
+	pic VARCHAR (500)  COMMENT '合同图片',
+	remark VARCHAR (500) COMMENT '备注',
+	is_deleted CHAR (1) DEFAULT '0' COMMENT '逻辑删除 0：正常 1：删除',
+	create_by VARCHAR (64) DEFAULT '' COMMENT '创建者',
+	create_time datetime COMMENT '创建时间',
+	update_by VARCHAR (64) DEFAULT '' COMMENT '更新者',
+	update_time datetime COMMENT '更新时间',
+	PRIMARY KEY (id)
+) ENGINE = INNODB auto_increment = 1 COMMENT = '采购订单合同关联表';
+
+-- ----------------------------
+-- 23、回款记录表
+-- ----------------------------
+drop table if exists t_payment_record;
+CREATE TABLE t_payment_record (
+	id BIGINT (20) NOT NULL auto_increment COMMENT 'id',
+	order_id BIGINT (20) NOT NULL COMMENT '订单id',
+	order_code VARCHAR (64) DEFAULT NULL COMMENT '订单编号',
+	serial_number int (11) DEFAULT 0 COMMENT '序号',
+	type char(1) DEFAULT '0' COMMENT '',
+	pic VARCHAR (500)  COMMENT '图片',
+	money decimal (20,2) DEFAULT 0 COMMENT '金额',
+	pay_time datetime COMMENT '回款时间',
+	remark VARCHAR (500) COMMENT '备注',
+	is_deleted CHAR (1) DEFAULT '0' COMMENT '逻辑删除 0：正常 1：删除',
+	create_by VARCHAR (64) DEFAULT '' COMMENT '创建者',
+	create_time datetime COMMENT '创建时间',
+	update_by VARCHAR (64) DEFAULT '' COMMENT '更新者',
+	update_time datetime COMMENT '更新时间',
+	PRIMARY KEY (id)
+) ENGINE = INNODB auto_increment = 1 COMMENT = '回款记录表';
+
+-- ----------------------------
+-- 24、商品品牌表
+-- ----------------------------
+drop table if exists t_brand;
+CREATE TABLE t_brand (
+	id BIGINT (20) NOT NULL auto_increment COMMENT 'id',
+	code VARCHAR (64) DEFAULT NULL COMMENT '品牌编号',
+	name VARCHAR (64)  COMMENT '品牌名称',
+	phone VARCHAR (64)  COMMENT '联系电话',
+	type char(1) DEFAULT '0' COMMENT '品牌类型：0：商品品牌',
+	pic VARCHAR (500)  COMMENT '图片',
+	remark VARCHAR (500) COMMENT '备注',
+	is_deleted CHAR (1) DEFAULT '0' COMMENT '逻辑删除 0：正常 1：删除',
+	create_by VARCHAR (64) DEFAULT '' COMMENT '创建者',
+	create_time datetime COMMENT '创建时间',
+	update_by VARCHAR (64) DEFAULT '' COMMENT '更新者',
+	update_time datetime COMMENT '更新时间',
+	PRIMARY KEY (id)
+) ENGINE = INNODB auto_increment = 1 COMMENT = '商品品牌表';
+
+-- ----------------------------
+-- 25、商品表
+-- ----------------------------
+drop table if exists t_product;
+CREATE TABLE t_product (
+	id BIGINT (20) NOT NULL auto_increment COMMENT 'id',
+	brand_id BIGINT (20) COMMENT '品牌id',
+	brand_code VARCHAR (100) COMMENT '品牌code',
+	brand_name VARCHAR (100) COMMENT '品牌名称',
+	code VARCHAR (64) DEFAULT NULL COMMENT '商品编号',
+	name VARCHAR (64)  COMMENT '商品名称',
+	type char(1) DEFAULT '0' COMMENT '商品类型',
+	pic VARCHAR (500)  COMMENT '图片',
+	guide_price decimal (20,2)  COMMENT '指导价',
+	sell_price decimal (20,2)  COMMENT '销售价',
+	unit VARCHAR (64)  COMMENT '单位',
+	remark VARCHAR (500) COMMENT '备注',
+	is_deleted CHAR (1) DEFAULT '0' COMMENT '逻辑删除 0：正常 1：删除',
+	create_by VARCHAR (64) DEFAULT '' COMMENT '创建者',
+	create_time datetime COMMENT '创建时间',
+	update_by VARCHAR (64) DEFAULT '' COMMENT '更新者',
+	update_time datetime COMMENT '更新时间',
+	PRIMARY KEY (id)
+) ENGINE = INNODB auto_increment = 1 COMMENT = '商品表';
+
+-- ----------------------------
+-- 26、发货记录表
+-- ----------------------------
+drop table if exists t_deliver_record;
+CREATE TABLE t_deliver_record (
+	id BIGINT (20) NOT NULL auto_increment COMMENT 'id',
+	order_id BIGINT (20) NOT NULL COMMENT '订单id',
+	order_code VARCHAR (64) DEFAULT NULL COMMENT '订单编号',
+	brand_id bigint(20) DEFAULT NULL COMMENT '品牌id',
+	product_id bigint(20) DEFAULT NULL COMMENT '商品id',
+	delivery_time datetime COMMENT '发货时间',
+	delivery_quantity decimal (20,2) COMMENT '发货数量',
+    delivery_unit VARCHAR (64) COMMENT '单位',
+    delivery_freight decimal (20,2) COMMENT '运费',
+	type char(1) DEFAULT '0' COMMENT '',
+	remark VARCHAR (500) COMMENT '备注',
+	is_deleted CHAR (1) DEFAULT '0' COMMENT '逻辑删除 0：正常 1：删除',
+	create_by VARCHAR (64) DEFAULT '' COMMENT '创建者',
+	create_time datetime COMMENT '创建时间',
+	update_by VARCHAR (64) DEFAULT '' COMMENT '更新者',
+	update_time datetime COMMENT '更新时间',
+	PRIMARY KEY (id)
+) ENGINE = INNODB auto_increment = 1 COMMENT = '采购订单合同关联表';

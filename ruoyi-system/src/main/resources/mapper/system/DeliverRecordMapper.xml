@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.DeliverRecordMapper">
+    
+    <resultMap type="DeliverRecord" id="DeliverRecordResult">
+        <result property="type"    column="type"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="deliveryTime"    column="delivery_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+        <result property="deliveryQuantity"    column="delivery_quantity"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="deliveryUnit"    column="delivery_unit"    />
+        <result property="id"    column="id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="deliveryFreight"    column="delivery_freight"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="brandId"    column="brand_id"    />
+        <result property="productId"    column="product_id"    />
+        <result property="orderCode"    column="order_code"    />
+    </resultMap>
+
+    <sql id="selectDeliverRecordVo">
+        select type, update_time, remark, delivery_time, is_deleted, delivery_quantity, create_by, delivery_unit, id, create_time, delivery_freight, order_id, update_by, brand_id, product_id, order_code from t_deliver_record
+    </sql>
+
+    <select id="selectDeliverRecordList" parameterType="DeliverRecord" resultMap="DeliverRecordResult">
+        <include refid="selectDeliverRecordVo"/>
+        <where>  
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="remark != null  and remark != ''"> and remark = #{remark}</if>
+            <if test="deliveryTime != null "> and delivery_time = #{deliveryTime}</if>
+            <if test="isDeleted != null  and isDeleted != ''"> and is_deleted = #{isDeleted}</if>
+            <if test="deliveryQuantity != null "> and delivery_quantity = #{deliveryQuantity}</if>
+            <if test="createBy != null  and createBy != ''"> and create_by = #{createBy}</if>
+            <if test="deliveryUnit != null  and deliveryUnit != ''"> and delivery_unit = #{deliveryUnit}</if>
+            <if test="id != null "> and id = #{id}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="deliveryFreight != null "> and delivery_freight = #{deliveryFreight}</if>
+            <if test="orderId != null "> and order_id = #{orderId}</if>
+            <if test="updateBy != null  and updateBy != ''"> and update_by = #{updateBy}</if>
+            <if test="brandId != null "> and brand_id = #{brandId}</if>
+            <if test="productId != null "> and product_id = #{productId}</if>
+            <if test="orderCode != null  and orderCode != ''"> and order_code = #{orderCode}</if>
+        </where>
+    </select>
+    
+    <select id="selectDeliverRecordById" parameterType="Long" resultMap="DeliverRecordResult">
+        <include refid="selectDeliverRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertDeliverRecord" parameterType="DeliverRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into t_deliver_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">type,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="deliveryTime != null">delivery_time,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+            <if test="deliveryQuantity != null">delivery_quantity,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="deliveryUnit != null">delivery_unit,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="deliveryFreight != null">delivery_freight,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="brandId != null">brand_id,</if>
+            <if test="productId != null">product_id,</if>
+            <if test="orderCode != null">order_code,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">#{type},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="deliveryTime != null">#{deliveryTime},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+            <if test="deliveryQuantity != null">#{deliveryQuantity},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="deliveryUnit != null">#{deliveryUnit},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="deliveryFreight != null">#{deliveryFreight},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="brandId != null">#{brandId},</if>
+            <if test="productId != null">#{productId},</if>
+            <if test="orderCode != null">#{orderCode},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDeliverRecord" parameterType="DeliverRecord">
+        update t_deliver_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null">type = #{type},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="deliveryTime != null">delivery_time = #{deliveryTime},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+            <if test="deliveryQuantity != null">delivery_quantity = #{deliveryQuantity},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="deliveryUnit != null">delivery_unit = #{deliveryUnit},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="deliveryFreight != null">delivery_freight = #{deliveryFreight},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="brandId != null">brand_id = #{brandId},</if>
+            <if test="productId != null">product_id = #{productId},</if>
+            <if test="orderCode != null">order_code = #{orderCode},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDeliverRecordById" parameterType="Long">
+        delete from t_deliver_record where id = #{id}
+    </delete>
+
+    <delete id="deleteDeliverRecordByIds" parameterType="String">
+        delete from t_deliver_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

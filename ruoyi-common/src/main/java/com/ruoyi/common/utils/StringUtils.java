@@ -456,4 +456,9 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils
     {
         return (T) obj;
     }
+
+    public static String getTableCode(String prefix, String id){
+        String code = String.format("%0" + 10 + "d", Integer.parseInt(id));
+        return prefix+code;
+    }
 }
