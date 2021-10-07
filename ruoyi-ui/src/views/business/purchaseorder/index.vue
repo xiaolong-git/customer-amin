@@ -233,6 +233,7 @@
 
     <!-- 添加或修改参数配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="1400px" append-to-body>
+      <!--<purchaseorder-info-form ref="purchaseorderInfo" :key="timer" :orderInfo="orderInfo" />-->
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="24">
@@ -241,18 +242,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <!--<el-row>
-          <el-col :span="12">
-            <el-form-item label="吨位" prop="tonnage">
-              <el-input v-model="form.tonnage" placeholder="吨位" :disabled="isDisabled"/>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="单价" prop="unitPrice">
-              <el-input v-model="form.unitPrice" placeholder="单价" :disabled="isDisabled"/>
-            </el-form-item>
-          </el-col>
-        </el-row>-->
         <el-row>
           <el-col :span="12">
             <el-form-item label="付款方式" prop="payType">
@@ -288,21 +277,8 @@
           <el-col :span="12">
             <el-form-item label="客户" prop="customerName">
                 <el-input v-model="form.customerName" placeholder="客户" :disabled="isDisabled"/>
-              <!--<el-select filterable v-model="form.customerId" placeholder="客户" clearable size="small" :disabled="isDisabled">
-                <el-option
-                  v-for="dict in customerOptions"
-                  :key="dict.dictValue"
-                  :label="dict.dictLabel"
-                  :value="dict.dictValue"
-                />
-              </el-select>-->
             </el-form-item>
           </el-col>
-          <!--<el-col :span="12">
-            <el-form-item label="运费" prop="freight">
-              <el-input v-model="form.freight" placeholder="运费" :disabled="isDisabled"/>
-            </el-form-item>
-          </el-col>-->
         </el-row>
         <el-row>
           <el-col :span="24">
@@ -401,13 +377,6 @@
                   :label="dict.dictValue"
                 >{{dict.dictLabel}}</el-radio>
               </el-radio-group>
-              <!--<el-radio-group v-model="form.makeInvoice">
-                <el-radio
-                  v-for="dict in statusOptions"
-                  :key="dict.dictValue"
-                  :label="dict.dictValue"
-                >{{dict.dictLabel}}</el-radio>
-              </el-radio-group>-->
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -427,6 +396,13 @@
           <el-col :span="24">
             <el-form-item label="备注" prop="remark">
               <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" :disabled="isDisabled"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row v-if="form.status == 3">
+          <el-col :span="24">
+            <el-form-item label="审批备注" prop="remark">
+              <el-input v-model="form.statusRemark" type="textarea" placeholder="审批备注" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -491,12 +467,20 @@ import { getToken } from "@/utils/auth";
 import { listProductByProperty } from "@/api/business/product/product";
 import { listOrderContractRelation } from "@/api/business/orderContractRelation/orderContractRelation";
 import axios from "axios";
+import basicInfoForm from "../../tool/gen/basicInfoForm";
+import purchaseorderInfoForm from "../../tool/business/purchaseorderForm";
 
 
 export default {
   name: "purchaseorder",
+  components: {
+    purchaseorderInfoForm
+  },
   data() {
     return {
+      // 表详细信息
+      orderInfo: {},
+      timer: '',
       // 遮罩层
       loading: true,
       // 选中数组
@@ -791,6 +775,26 @@ export default {
         }
       });
     },
+    /** 修改按钮操作 */
+    /*handleDetail(row) {
+      /!*this.isDisabled = true
+      this.reset();
+      const id = row.id || this.ids
+      getPurchaseorder(id).then(response => {
+        this.form = response.data;
+        this.open = true;
+        this.title = "查看采购订单";
+      });*!/
+      this.timer = new Date().getTime()
+
+      this.open = true;
+      this.orderInfo = {}
+      this.orderInfo.id = row.id
+
+      //this.open = false;
+      //this.$refs.purchaseorderInfo.$refs.handleDetail(row.id)
+      //this.$refs.purchaseorderInfo.handleDetail(row.id)
+    },*/
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.isDisabled = false

@@ -7,6 +7,7 @@ import com.ruoyi.common.core.domain.entity.PurchaseOrder;
 import com.ruoyi.common.core.domain.entity.PurchaseOrderProductRelation;
 import com.ruoyi.common.core.domain.model.BrandProductVo;
 import com.ruoyi.common.core.domain.model.PurchaseOrderDetail;
+import com.ruoyi.common.core.domain.model.PurchaseOrderListVo;
 import com.ruoyi.common.core.domain.model.PurchaseOrderReqVo;
 import com.ruoyi.common.exception.CustomException;
 import com.ruoyi.common.utils.DateUtils;
@@ -83,6 +84,16 @@ public class PurchaseOrderServiceImpl implements IPurchaseOrderService
     @Override
     public List<PurchaseOrder> selectPurchaseOrderList(PurchaseOrderReqVo purchaseOrder)
     {
+        /*List<PurchaseOrderListVo> result = Lists.newArrayList();
+        List<PurchaseOrder> orderList = purchaseOrderMapper.selectPurchaseOrderList(purchaseOrder)
+        if(!CollectionUtils.isEmpty(orderList)){
+            for (PurchaseOrder po : orderList) {
+                //封装剩余未发货数量，统一使用kg表示
+
+
+
+            }
+        }*/
         return purchaseOrderMapper.selectPurchaseOrderList(purchaseOrder);
     }
 
@@ -234,6 +245,7 @@ public class PurchaseOrderServiceImpl implements IPurchaseOrderService
             throw new CustomException("获取订单详情信息异常，请联系管理员");
         }
         order.setStatus(purchaseOrder.getStatus());
+        order.setStatusRemark(purchaseOrder.getStatusRemark());
         return purchaseOrderMapper.updatePurchaseOrder(order);
     }
 }

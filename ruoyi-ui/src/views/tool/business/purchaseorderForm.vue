@@ -197,6 +197,13 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <el-row v-if="form.status == 3">
+        <el-col :span="24">
+          <el-form-item label="审批备注" prop="remark">
+            <el-input v-model="form.statusRemark" type="textarea" placeholder="审批备注" :disabled="true"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
     <!--<div style="text-align: right">
       <el-button v-if="!isDisabled" type="primary" @click="submitForm">确 定</el-button>

@@ -4,6 +4,7 @@ package com.ruoyi.system.service;
 import java.util.List;
 import com.ruoyi.common.core.domain.entity.PurchaseOrder;
 import com.ruoyi.common.core.domain.model.PurchaseOrderDetail;
+import com.ruoyi.common.core.domain.model.PurchaseOrderListVo;
 import com.ruoyi.common.core.domain.model.PurchaseOrderReqVo;
 
 /**

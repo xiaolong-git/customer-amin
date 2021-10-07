@@ -224,7 +224,7 @@
     />
 
     <!-- 添加或修改参数配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="1000px" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" width="1400px" append-to-body>
       <!--<basic-info-form ref="basicInfo" :info="info" />-->
       <purchaseorder-info-form ref="purchaseorderInfo" :key="timer" :orderInfo="orderInfo" />
 

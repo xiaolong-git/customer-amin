@@ -197,187 +197,8 @@
     />
 
     <!-- 添加或修改参数配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="1000px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="订单编号" prop="code">
-              <el-input v-model="form.code" placeholder="订单编号" disabled/>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <!--<el-row>
-          <el-col :span="12">
-            <el-form-item label="吨位" prop="tonnage">
-              <el-input v-model="form.tonnage" placeholder="吨位" :disabled="isDisabled"/>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="单价" prop="unitPrice">
-              <el-input v-model="form.unitPrice" placeholder="单价" :disabled="isDisabled"/>
-            </el-form-item>
-          </el-col>
-        </el-row>-->
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="提货方式" prop="pickType">
-              <el-select v-model="form.pickType" placeholder="提货方式" clearable size="small" :disabled="isDisabled">
-                <el-option
-                  v-for="dict in pickTypeOptions"
-                  :key="dict.dictValue"
-                  :label="dict.dictLabel"
-                  :value="dict.dictValue"
-                />
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="付款方式" prop="payType">
-              <el-select v-model="form.payType" placeholder="付款方式" clearable size="small" :disabled="isDisabled">
-                <el-option
-                  v-for="dict in payTypeOptions"
-                  :key="dict.dictValue"
-                  :label="dict.dictLabel"
-                  :value="dict.dictValue"
-                />
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="客户" prop="customerName">
-                <el-input v-model="form.customerName" placeholder="客户" :disabled="isDisabled"/>
-              <!--<el-select filterable v-model="form.customerId" placeholder="客户" clearable size="small" :disabled="isDisabled">
-                <el-option
-                  v-for="dict in customerOptions"
-                  :key="dict.dictValue"
-                  :label="dict.dictLabel"
-                  :value="dict.dictValue"
-                />
-              </el-select>-->
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="运费" prop="freight">
-              <el-input v-model="form.freight" placeholder="运费" :disabled="isDisabled"/>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-button
-              type="success"
-              plain
-              icon="el-icon-plus"
-              size="mini"
-              @click="handleAddProduct"
-              v-if="!isDisabled"
-            >增加商品</el-button>
-          </el-col>
-        </el-row>
-        <el-row >
-          <el-card class="box-card" shadow="never">
-            <div v-for="(row,index) in form.productItems">
-              <el-row type="flex" justify="center"  >
-                <el-col :span="5">
-                  <el-form-item label="品牌" prop="brandId">
-                    <el-select filterable v-model="form.productItems[index].brandId" placeholder="品牌" clearable size="small" :disabled="isDisabled" @change="handleChooseBrand(index)">
-                      <el-option
-                        v-for="brand in brandList"
-                        :key="brand.name"
-                        :label="brand.name"
-                        :value="brand.id"
-                      />
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="5">
-                  <el-form-item label="产品" prop="productId">
-                    <el-select filterable v-model="form.productItems[index].productId" placeholder="产品" clearable size="small" :disabled="isDisabled">
-                      <el-option
-                        v-for="product in productList[index]"
-                        :key="product.name"
-                        :label="product.name"
-                        :value="product.id"
-                      />
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="5">
-                  <el-form-item label="吨位" prop="tonnage">
-                    <el-input v-model="form.productItems[index].tonnage" placeholder="吨位" :disabled="isDisabled"/>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="5">
-                  <el-form-item label="单价" prop="unitPrice">
-                    <el-input v-model="form.productItems[index].unitPrice" placeholder="单价" :disabled="isDisabled"/>
-                  </el-form-item>
-                </el-col>
-                <el-col :offset="2" :span="4" >
-                  <el-button v-if="!isDisabled" type="danger" plain size="medium" @click="handleDelProduct(index)">删除</el-button>
-                </el-col>
-              </el-row>
-            </div>
-          </el-card>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="合同方" prop="contractOwnership">
-              <el-radio-group v-model="form.contractOwnership" size="small" :disabled="isDisabled">
-                <el-radio
-                  v-for="dict in contractOwnershipOptions"
-                  :key="dict.dictValue"
-                  :label="dict.dictValue"
-                >{{dict.dictLabel}}</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="是否开票" prop="makeInvoice">
-              <el-radio-group v-model="form.makeInvoice" size="small" :disabled="isDisabled">
-                <el-radio
-                  v-for="dict in makeInvoiceOptions"
-                  :key="dict.dictValue"
-                  :label="dict.dictValue"
-                >{{dict.dictLabel}}</el-radio>
-              </el-radio-group>
-              <!--<el-radio-group v-model="form.makeInvoice">
-                <el-radio
-                  v-for="dict in statusOptions"
-                  :key="dict.dictValue"
-                  :label="dict.dictValue"
-                >{{dict.dictLabel}}</el-radio>
-              </el-radio-group>-->
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="开票类型" prop="invoiceType">
-              <el-select v-model="form.invoiceType" placeholder="开票类型" clearable size="small" :disabled="isDisabled">
-                <el-option
-                  v-for="dict in invoiceTypeOptions"
-                  :key="dict.dictValue"
-                  :label="dict.dictLabel"
-                  :value="dict.dictValue"
-                />
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" :disabled="isDisabled"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button v-if="!isDisabled" type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
-      </div>
+    <el-dialog :title="title" :visible.sync="open" width="1400px" append-to-body>
+      <purchaseorder-info-form ref="purchaseorderInfo" :key="timer" :orderInfo="orderInfo" />
     </el-dialog>
 
     <!-- 添上传合同对话框 -->
@@ -440,12 +261,20 @@ import { getToken } from "@/utils/auth";
 import { listProductByProperty } from "@/api/business/product/product";
 import axios from 'axios'
 import { listOrderContractRelation, getOrderContractRelation, delOrderContractRelation, addOrderContractRelation, updateOrderContractRelation, exportOrderContractRelation } from "@/api/business/orderContractRelation/orderContractRelation";
+import basicInfoForm from "../../tool/gen/basicInfoForm";
+import purchaseorderInfoForm from "../../tool/business/purchaseorderForm";
 
 
 export default {
   name: "approval",
+  components: {
+    purchaseorderInfoForm
+  },
   data() {
     return {
+      // 表详细信息
+      orderInfo: {},
+      timer: '',
       // 遮罩层
       loading: true,
       // 选中数组
@@ -797,14 +626,23 @@ export default {
     },
     /** 修改按钮操作 */
     handleDetail(row) {
-      this.isDisabled = true
+      /*this.isDisabled = true
       this.reset();
       const id = row.id || this.ids
       getPurchaseorder(id).then(response => {
         this.form = response.data;
         this.open = true;
         this.title = "查看采购订单";
-      });
+      });*/
+      this.timer = new Date().getTime()
+
+      this.open = true;
+      this.orderInfo = {}
+      this.orderInfo.id = row.id
+
+      //this.open = false;
+      //this.$refs.purchaseorderInfo.$refs.handleDetail(row.id)
+      //this.$refs.purchaseorderInfo.handleDetail(row.id)
     },
     /** 修改按钮操作 */
     handleUpdate(row) {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ruoyi.common.core.domain.entity.PurchaseOrder;
 import com.ruoyi.common.core.domain.model.PurchaseOrderDetail;
+import com.ruoyi.common.core.domain.model.PurchaseOrderListVo;
 import com.ruoyi.common.core.domain.model.PurchaseOrderReqVo;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.service.IPurchaseOrderService;
@@ -40,7 +41,7 @@ public class PurchaseOrderController extends BaseController
     /**
      * 查询采购订单列表
      */
-    @PreAuthorize("@ss.hasPermi('business:purchaseorder:listByUser')")
+    /*@PreAuthorize("@ss.hasPermi('business:purchaseorder:listByUser')")*/
     @GetMapping("/listByUser")
     public TableDataInfo listByUser(PurchaseOrderReqVo purchaseOrder)
     {
@@ -53,7 +54,7 @@ public class PurchaseOrderController extends BaseController
     /**
      * 查询采购订单列表
      */
-    @PreAuthorize("@ss.hasPermi('business:purchaseorder:list')")
+    /*@PreAuthorize("@ss.hasPermi('business:purchaseorder:list')")*/
     @GetMapping("/list")
     public TableDataInfo list(PurchaseOrderReqVo purchaseOrder)
     {
@@ -65,7 +66,7 @@ public class PurchaseOrderController extends BaseController
     /**
      * 导出采购订单列表
      */
-    @PreAuthorize("@ss.hasPermi('business:purchaseorder:export')")
+    /*@PreAuthorize("@ss.hasPermi('business:purchaseorder:export')")*/
     @Log(title = "采购订单", businessType = BusinessType.EXPORT)
     @GetMapping("/export")
     public AjaxResult export(PurchaseOrderReqVo purchaseOrder)
@@ -78,7 +79,7 @@ public class PurchaseOrderController extends BaseController
     /**
      * 获取采购订单详细信息
      */
-    @PreAuthorize("@ss.hasPermi('business:purchaseorder:query')")
+    /*@PreAuthorize("@ss.hasPermi('business:purchaseorder:query')")*/
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -88,7 +89,7 @@ public class PurchaseOrderController extends BaseController
     /**
      * 新增采购订单
      */
-    @PreAuthorize("@ss.hasPermi('business:purchaseorder:add')")
+    /*@PreAuthorize("@ss.hasPermi('business:purchaseorder:add')")*/
     @Log(title = "采购订单", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody PurchaseOrderDetail purchaseOrder)
@@ -110,7 +111,7 @@ public class PurchaseOrderController extends BaseController
     /**
      * 修改采购订单
      */
-    @PreAuthorize("@ss.hasPermi('business:purchaseorder:edit')")
+    /*@PreAuthorize("@ss.hasPermi('business:purchaseorder:edit')")*/
     @Log(title = "采购订单", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody PurchaseOrderDetail purchaseOrder)
@@ -122,7 +123,7 @@ public class PurchaseOrderController extends BaseController
     /**
      * 删除采购订单
      */
-    @PreAuthorize("@ss.hasPermi('business:purchaseorder:remove')")
+    /*@PreAuthorize("@ss.hasPermi('business:purchaseorder:remove')")*/
     @Log(title = "采购订单", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

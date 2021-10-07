@@ -37,7 +37,7 @@ public class DeliverRecordController extends BaseController
     /**
      * 查询发货记录表列表
      */
-    @PreAuthorize("@ss.hasPermi('deliver:deliver:list')")
+    /*@PreAuthorize("@ss.hasPermi('deliver:deliver:list')")*/
     @GetMapping("/list")
     public TableDataInfo list(DeliverRecord deliverRecord)
     {
@@ -49,7 +49,7 @@ public class DeliverRecordController extends BaseController
     /**
      * 导出发货记录表列表
      */
-    @PreAuthorize("@ss.hasPermi('deliver:deliver:export')")
+    /*@PreAuthorize("@ss.hasPermi('deliver:deliver:export')")*/
     @Log(title = "发货记录表", businessType = BusinessType.EXPORT)
     @GetMapping("/export")
     public AjaxResult export(DeliverRecord deliverRecord)
@@ -62,7 +62,7 @@ public class DeliverRecordController extends BaseController
     /**
      * 获取发货记录表详细信息
      */
-    @PreAuthorize("@ss.hasPermi('deliver:deliver:query')")
+    /*@PreAuthorize("@ss.hasPermi('deliver:deliver:query')")*/
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class DeliverRecordController extends BaseController
     /**
      * 新增发货记录表
      */
-    @PreAuthorize("@ss.hasPermi('deliver:deliver:add')")
+    /*@PreAuthorize("@ss.hasPermi('deliver:deliver:add')")*/
     @Log(title = "发货记录表", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody DeliverRecord deliverRecord)
@@ -83,7 +83,7 @@ public class DeliverRecordController extends BaseController
     /**
      * 修改发货记录表
      */
-    @PreAuthorize("@ss.hasPermi('deliver:deliver:edit')")
+    /*@PreAuthorize("@ss.hasPermi('deliver:deliver:edit')")*/
     @Log(title = "发货记录表", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody DeliverRecord deliverRecord)
@@ -94,7 +94,7 @@ public class DeliverRecordController extends BaseController
     /**
      * 删除发货记录表
      */
-    @PreAuthorize("@ss.hasPermi('deliver:deliver:remove')")
+    /*@PreAuthorize("@ss.hasPermi('deliver:deliver:remove')")*/
     @Log(title = "发货记录表", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
